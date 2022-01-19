@@ -1,26 +1,19 @@
 <template>
   <div class="guestList">
-    <md-table>
-      <md-table-row>
-        <md-table-head md-numeric>Hashword</md-table-head>
-        <md-table-head>First Name</md-table-head>
-        <md-table-head>Last Name</md-table-head>
-        <md-table-head>Address</md-table-head>
-        <md-table-head>Attending?</md-table-head>
-        <md-table-head>Food</md-table-head>
-        <md-table-head>Child?</md-table-head>
-        <md-table-head>Notes</md-table-head>
-      </md-table-row>
-
-      <md-table-row v-for="guest in guestList" :key="guest.firstName + guest.lastName">
-        <md-table-cell md-numeric>1111111111111</md-table-cell>
-        <md-table-cell>{{ guest.firstName }}</md-table-cell>
-        <md-table-cell>{{ guest.lastName }}</md-table-cell>
-        <md-table-cell>{{ guest.address }}</md-table-cell>
-        <md-table-cell>{{ guest.isAttending }}</md-table-cell>
-        <md-table-cell>{{ guest.food }}</md-table-cell>
-        <md-table-cell>{{ guest.isChild }}</md-table-cell>
-        <md-table-cell>{{ guest.notes }}</md-table-cell>
+    <md-table v-model="guestList" md-sort="firstName" md-sort-order="asc" md-card>
+      <md-table-toolbar>
+        <h1 class="md-title">Invitees</h1>
+      </md-table-toolbar>
+      <md-table-row slot="md-table-row" slot-scope="{ item }">
+        <md-table-cell md-label="Hashword" md-sort-by="id" md-numeric>123kljdsklkj35</md-table-cell>
+        <md-table-cell md-label="First Name" md-sort-by="firstName">{{ item.firstName }}</md-table-cell>
+        <md-table-cell md-label="Last Name" md-sort-by="lastName">{{ item.lastName }}</md-table-cell>
+        <md-table-cell md-label="Address" md-sort-by="address">{{ item.address }}</md-table-cell>
+        <md-table-cell md-label="Viewed?">{{ item.hasViewed }}</md-table-cell>
+        <md-table-cell md-label="Attending?">{{ item.isAttending }}</md-table-cell>
+        <md-table-cell md-label="Food Selection" md-sort-by="food">{{ item.food }}</md-table-cell>
+        <md-table-cell md-label="Child?">{{ item.isChild }}</md-table-cell>
+        <md-table-cell md-label="Notes" md-sort-by="notes">{{ item.notes }}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
@@ -43,18 +36,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>

@@ -5,8 +5,8 @@
       <md-button @click="() => $router.push({name: 'dashboard'})">
         Dashboard
       </md-button>
-      <md-button @click="() => $router.push({name: 'about'})">
-        About
+      <md-button @click="() => $router.push({name: 'tools'})">
+        Tools
       </md-button>
     </md-toolbar>
     <router-view/>

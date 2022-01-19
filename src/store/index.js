@@ -35,6 +35,20 @@ const store = new Vuex.Store({
         .catch((error) => commit('setError', error))
         .finally(() => commit('setLoading', false));
     }
+  },
+  getters: {
+    guestLength: state => {
+      return state.guestList.length;
+    },
+    guestsAttending: state => {
+      return state.guestList.filter((guest) => guest.isAttending).length;
+    },
+    guestsChild: state => {
+      return state.guestList.filter((guest) => guest.isChild).length;
+    },
+    guestsViewed: state => {
+      return state.guestList.filter((guest) => guest.hasViewed).length;
+    }
   }
 })
 

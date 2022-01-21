@@ -20,17 +20,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-
 export default {
   name: 'GuestList',
   props: {
-    msg: String
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+    guestList: Array
   },
-  computed: mapState({
-    isLoading: state => state.isLoading,
-    guestList: state => state.guestList,
-  })
 }
 </script>
 

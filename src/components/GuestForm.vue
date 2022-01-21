@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="guestForm">
     <form novalidate class="md-layout" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-50 md-small-size-100">
         <md-card-header>
@@ -27,7 +27,23 @@
             </div>
           </div>
 
-          <md-checkbox v-model="form.isChild">Child meal(around age 10)</md-checkbox>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-checkbox v-model="form.isChild">Child meal (ages 0-10)</md-checkbox>
+            </div>
+            <div class="md-layout-item md-small-size-100" v-if="!form.isChild">
+              <md-field :class="getValidationClass('food')">
+                <label for="food">Food</label>
+                <md-select name="food" id="food" v-model="form.food" md-dense :disabled="sending">
+                  <md-option></md-option>
+                  <md-option value="Yum">Yum</md-option>
+                  <md-option value="Dum">Dum</md-option>
+                </md-select>
+                <span class="md-error">The food is required</span>
+              </md-field>
+            </div>
+          </div>
+
 
           <md-field :class="getValidationClass('address')">
             <label for="address">Address</label>
@@ -74,7 +90,7 @@
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
 
         <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="sending">Create user</md-button>
+          <md-button type="submit" class="md-primary" :disabled="sending">Add household member</md-button>
         </md-card-actions>
       </md-card>
 
@@ -97,6 +113,7 @@ export default {
       firstName: null,
       lastName: null,
       isChild: null,
+      food: null,
       address: null,
       city: null,
       province: null,
@@ -120,6 +137,9 @@ export default {
       isChild: {
         required,
       },
+      food: {
+        required,
+      },
       address: {
         required,
         maxLength: minLength(3)
@@ -130,11 +150,11 @@ export default {
       },
       province: {
         required,
-        maxLength: minLength(3)
+        maxLength: minLength(2)
       },
       country: {
         required,
-        maxLength: minLength(3)
+        maxLength: minLength(2)
       },
       email: {
         required,
@@ -154,28 +174,20 @@ export default {
       this.form.firstName = null
       this.form.lastName = null
       this.form.isChild = null
+      this.form.food = null
       this.form.address = null
       this.form.city = null
       this.form.province = null
       this.form.country = null
       this.form.email = null
     },
-    saveUser () {
-      this.sending = true
-
-      // Instead of this timeout, here you can call your API
-      window.setTimeout(() => {
-        this.lastUser = `${this.form.firstName} ${this.form.lastName}`
-        this.userSaved = true
-        this.sending = false
-        this.clearForm()
-      }, 1500)
-    },
     validateUser () {
       this.$v.$touch()
-
+      console.log(`form validation isInvalid:${this.$v.$invalid}`)
       if (!this.$v.$invalid) {
-        this.saveUser()
+        console.log('valid form being added')
+        this.$emit('invitee', this.form)
+        this.clearForm()
       }
     }
   }
@@ -184,4 +196,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.md-layout {
+  justify-content: center;
+}
 </style>

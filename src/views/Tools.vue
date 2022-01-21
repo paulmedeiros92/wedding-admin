@@ -1,17 +1,21 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
-    <GuestForm />
+    <HouseholdTool />
   </div>
 </template>
 <script>
-import GuestForm from '@/components/GuestForm.vue';
+import HouseholdTool from '@/components/HouseholdTool.vue';
 
 export default {
   name: 'Tools',
   components: {
-    GuestForm
+    HouseholdTool
   }
 }
 </script>
+<style scoped>
+.guestForm {
+  margin: auto;
+}
+</style>
 

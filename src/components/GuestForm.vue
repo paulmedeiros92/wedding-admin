@@ -166,32 +166,32 @@ export default {
     getValidationClass(fieldName) {
       const field = this.$v.form[fieldName];
       if (field) {
-        return { 'md-invalid': field.$invalid && field.$dirty }
+        return { 'md-invalid': field.$invalid && field.$dirty };
       }
     },
     clearForm () {
-      this.$v.$reset()
-      this.form.firstName = null
-      this.form.lastName = null
-      this.form.isChild = null
-      this.form.food = null
-      this.form.address = null
-      this.form.city = null
-      this.form.province = null
-      this.form.country = null
-      this.form.email = null
+      this.$v.$reset();
+      this.form.firstName = null;
+      this.form.lastName = null;
+      this.form.isChild = null;
+      this.form.food = null;
+      this.form.address = null;
+      this.form.city = null;
+      this.form.province = null;
+      this.form.country = null;
+      this.form.email = null;
     },
     validateUser () {
-      this.$v.$touch()
-      console.log(`form validation isInvalid:${this.$v.$invalid}`)
+      this.$v.$touch();
+      console.log(`form validation isInvalid:${this.$v.$invalid}`);
       if (!this.$v.$invalid) {
-        console.log('valid form being added')
-        this.$emit('invitee', this.form)
-        this.clearForm()
+        console.log('valid form being added');
+        this.$emit('invitee', this.form);
+        this.clearForm();
       }
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

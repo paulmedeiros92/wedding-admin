@@ -6,8 +6,8 @@
   </div>
 </template>
 <script>
-import GuestList from '@/components/GuestList.vue'
-import GuestForm from '@/components/GuestForm.vue'
+import GuestList from '@/components/GuestList.vue';
+import GuestForm from '@/components/GuestForm.vue';
 
 export default {
   name: 'Tools',
@@ -23,7 +23,7 @@ export default {
       this.household.push(invitee);
     }
   }
-}
+};
 </script>
 <style scoped>
 .guestForm {

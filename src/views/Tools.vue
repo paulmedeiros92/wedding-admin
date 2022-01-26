@@ -11,7 +11,7 @@ export default {
   components: {
     HouseholdTool
   }
-}
+};
 </script>
 <style scoped>
 .guestForm {

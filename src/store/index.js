@@ -1,9 +1,9 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 import firebaseService from '@/services/firebase-service';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 /* eslint-disable no-new */
 const store = new Vuex.Store({
@@ -50,6 +50,6 @@ const store = new Vuex.Store({
       return state.guestList.filter((guest) => guest.hasViewed).length;
     }
   }
-})
+});
 
-export default store
+export default store;

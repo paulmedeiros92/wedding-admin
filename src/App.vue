@@ -18,7 +18,7 @@ export default {
   mounted() {
     this.$store.dispatch('getGuestList');
   }
-}
+};
 </script>
 <style>
 #app {

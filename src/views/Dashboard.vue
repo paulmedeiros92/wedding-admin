@@ -7,9 +7,9 @@
 
 <script>
 // @ is an alias to /src
-import Statistics from '@/components/Statistics.vue'
-import GuestList from '@/components/GuestList.vue'
-import { mapState } from 'vuex'
+import Statistics from '@/components/Statistics.vue';
+import GuestList from '@/components/GuestList.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'dashboard',
@@ -21,5 +21,5 @@ export default {
     isLoading: state => state.isLoading,
     guestList: state => state.guestList,
   })
-}
+};
 </script>

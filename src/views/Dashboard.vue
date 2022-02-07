@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <Statistics />
-    <GuestList :isLoading="isLoading" :guestList="guestList" />
+    <GuestList :title="Invitees" :isLoading="isLoading" :guestList="guestList" />
   </div>
 </template>
 

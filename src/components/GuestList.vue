@@ -2,7 +2,7 @@
   <div class="guestList">
     <md-table v-model="guestList" md-sort="firstName" md-sort-order="asc" md-card>
       <md-table-toolbar>
-        <h1 class="md-title">Invitees</h1>
+        <h1 class="md-title">{{title}}</h1>
       </md-table-toolbar>
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Hashword" md-sort-by="id" md-numeric>123kljdsklkj35</md-table-cell>
@@ -23,6 +23,7 @@
 export default {
   name: 'GuestList',
   props: {
+    title: String,
     isLoading: {
       type: Boolean,
       default: false,

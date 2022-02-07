@@ -29,17 +29,15 @@
 
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-checkbox v-model="form.isChild">Child meal (ages 0-10)</md-checkbox>
+              <md-checkbox v-model="form.isChild">Child meal (0-10 yrs)</md-checkbox>
             </div>
-            <div class="md-layout-item md-small-size-100" v-if="!form.isChild">
+            <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('food')">
                 <label for="food">Food</label>
                 <md-select name="food" id="food" v-model="form.food" md-dense :disabled="sending">
-                  <md-option></md-option>
-                  <md-option value="Yum">Yum</md-option>
-                  <md-option value="Dum">Dum</md-option>
+                  <md-option v-for="food in foods" :value="food" :key="food">{{food}}</md-option>
                 </md-select>
-                <span class="md-error">The food is required</span>
+                <span class="md-error" v-if="$v.form.food.required">The food is required</span>
               </md-field>
             </div>
           </div>
@@ -56,7 +54,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('city')">
                 <label for="city">City</label>
-                <md-input type="city" name="city" id="city" autocomplete="city" v-model="form.city" :disabled="sending" />
+                <md-input type="city" name="city" id="city" autocomplete="home city" v-model="form.city" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.city.required">The city is required</span>
                 <span class="md-error" v-else-if="!$v.form.city.city">Invalid city</span>
               </md-field>
@@ -112,7 +110,7 @@ export default {
     form: {
       firstName: null,
       lastName: null,
-      isChild: null,
+      isChild: false,
       food: null,
       address: null,
       city: null,
@@ -122,7 +120,9 @@ export default {
     },
     userSaved: false,
     sending: false,
-    lastUser: null
+    lastUser: null,
+    adultFood: ["Chicken", "Fish", "Beef", "Vegetarian"],
+    childFood: ["Chicken Nugzz", "Grilled Cheezze"],
   }),
   validations: {
     form: {
@@ -173,7 +173,7 @@ export default {
       this.$v.$reset();
       this.form.firstName = null;
       this.form.lastName = null;
-      this.form.isChild = null;
+      this.form.isChild = false;
       this.form.food = null;
       this.form.address = null;
       this.form.city = null;
@@ -183,12 +183,15 @@ export default {
     },
     validateUser () {
       this.$v.$touch();
-      console.log(`form validation isInvalid:${this.$v.$invalid}`);
       if (!this.$v.$invalid) {
-        console.log('valid form being added');
-        this.$emit('invitee', this.form);
+        this.$emit('invitee', {...this.form});
         this.clearForm();
       }
+    }
+  },
+  computed: {
+    foods: function () {
+      return this.form.isChild ? this.childFood : this.adultFood;
     }
   }
 };

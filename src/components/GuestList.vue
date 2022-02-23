@@ -8,9 +8,6 @@
         <md-table-cell md-label="Hashword" md-sort-by="id" md-numeric>123kljdsklkj35</md-table-cell>
         <md-table-cell md-label="First Name" md-sort-by="firstName">{{ item.firstName }}</md-table-cell>
         <md-table-cell md-label="Last Name" md-sort-by="lastName">{{ item.lastName }}</md-table-cell>
-        <md-table-cell md-label="Address" md-sort-by="address">{{ item.address }}</md-table-cell>
-        <md-table-cell md-label="Viewed?">{{ item.hasViewed }}</md-table-cell>
-        <md-table-cell md-label="Attending?">{{ item.isAttending }}</md-table-cell>
         <md-table-cell md-label="Food Selection" md-sort-by="food">{{ item.food }}</md-table-cell>
         <md-table-cell md-label="Child?">{{ item.isChild }}</md-table-cell>
         <md-table-cell md-label="Notes" md-sort-by="notes">{{ item.notes }}</md-table-cell>

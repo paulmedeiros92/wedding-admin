@@ -1,9 +1,9 @@
 <template>
-  <div class="guestForm">
+  <div class="attendeeForm">
     <form novalidate class="md-layout" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-50 md-small-size-100">
         <md-card-header>
-          <div class="md-title">Invite</div>
+          <div class="md-title">Attendee</div>
         </md-card-header>
 
         <md-card-content>
@@ -41,54 +41,12 @@
               </md-field>
             </div>
           </div>
-
-
-          <md-field :class="getValidationClass('address')">
-            <label for="address">Address</label>
-            <md-input type="address" name="address" id="address" autocomplete="address" v-model="form.address" :disabled="sending" />
-            <span class="md-error" v-if="!$v.form.address.required">The address is required</span>
-            <span class="md-error" v-else-if="!$v.form.address.address">Invalid address</span>
-          </md-field>
-          
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('city')">
-                <label for="city">City</label>
-                <md-input type="city" name="city" id="city" autocomplete="home city" v-model="form.city" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.city.required">The city is required</span>
-                <span class="md-error" v-else-if="!$v.form.city.city">Invalid city</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('province')">
-                <label for="province">State/Province</label>
-                <md-input type="province" name="province" id="province" autocomplete="province" v-model="form.province" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.province.required">The province is required</span>
-                <span class="md-error" v-else-if="!$v.form.province.province">Invalid province</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('country')">
-                <label for="country">Country</label>
-                <md-input type="country" name="country" id="country" autocomplete="country" v-model="form.country" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.country.required">The country is required</span>
-                <span class="md-error" v-else-if="!$v.form.country.country">Invalid country</span>
-              </md-field>
-            </div>
-          </div>
-
-          <md-field :class="getValidationClass('email')">
-            <label for="email">Email</label>
-            <md-input type="email" name="email" id="email" autocomplete="email" v-model="form.email" :disabled="sending" />
-            <span class="md-error" v-if="!$v.form.email.required">The email is required</span>
-            <span class="md-error" v-else-if="!$v.form.email.email">Invalid email</span>
-          </md-field>
         </md-card-content>
 
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
 
         <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="sending">Add household member</md-button>
+          <md-button type="submit" class="md-raised md-primary" :disabled="sending">Add</md-button>
         </md-card-actions>
       </md-card>
 
@@ -100,11 +58,11 @@
 <script>
 import { vuelidateMixin } from 'vuelidate';
 import {
-  required, email, minLength,
+  required, minLength,
 } from 'vuelidate/lib/validators';
 
 export default {
-  name: 'GuestForm',
+  name: 'AttendeeForm',
   mixins: vuelidateMixin,
   data: () => ({
     form: {
@@ -112,11 +70,6 @@ export default {
       lastName: null,
       isChild: false,
       food: null,
-      address: null,
-      city: null,
-      province: null,
-      country: null,
-      email: null,
     },
     userSaved: false,
     sending: false,
@@ -140,26 +93,6 @@ export default {
       food: {
         required,
       },
-      address: {
-        required,
-        maxLength: minLength(3)
-      },
-      city: {
-        required,
-        maxLength: minLength(3)
-      },
-      province: {
-        required,
-        maxLength: minLength(2)
-      },
-      country: {
-        required,
-        maxLength: minLength(2)
-      },
-      email: {
-        required,
-        email
-      }
     }
   },
   methods: {
@@ -175,11 +108,6 @@ export default {
       this.form.lastName = null;
       this.form.isChild = false;
       this.form.food = null;
-      this.form.address = null;
-      this.form.city = null;
-      this.form.province = null;
-      this.form.country = null;
-      this.form.email = null;
     },
     validateUser () {
       this.$v.$touch();

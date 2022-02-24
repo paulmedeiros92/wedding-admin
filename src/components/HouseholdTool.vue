@@ -1,21 +1,17 @@
 <template>
-  <div class="about">
-    <h1>Household</h1>
-    <ContactInfoForm v-model="contactInfo"/>
-    <AttendeeForm />
-    <Card title="Household (Preview)">
+  <div class="about md-layout">
+    <div class="about__input md-layout-item md-size-100 md-layout">
+      <Card class="md-layout-item md-size-50 md-small-size-100" title="Contact Info">
+        <template v-slot:content><ContactInfoForm v-model="contactInfo" /></template>
+      </Card>
+      <Card class="md-layout-item md-size-50 md-small-size-100" title="Attendee">
+        <template v-slot:content><AttendeeForm @attendee="(event) => addAttendee(event)" /></template>
+      </Card>
+    </div>
+    <Card class="md-layout-item md-size-100" title="Household (Preview)">
       <template v-slot:content>
-        <div class="contact-info">
-          <div class="contact-info__top">
-            <md-icon>key</md-icon>
-            <span class="md-list-item-text">{{ hashword }}</span>
-            <md-icon>email</md-icon>
-            <span class="md-list-item-text">{{ contactInfo.email }}</span>
-          </div>
-          <md-icon>home</md-icon>
-          <span class="md-list-item-text">{{ fancyAddress }}</span>
-        </div>
-        <GuestList title="Guests" :guestList="attendees" />
+        <HouseholdContact :hashword="hashword" :email="contactInfo.email" :address="fancyAddress" />
+        <GuestList title="Guests" :guestList="attendees" @delete="(index) => deleteAttendee(index)" />
       </template>
     </Card>
     <md-button class="md-raised md-accent finalize">Finalize</md-button>
@@ -26,6 +22,7 @@ import AttendeeForm from '@/components/AttendeeForm.vue';
 import GuestList from '@/components/GuestList.vue';
 import ContactInfoForm from '@/components/ContactInfoForm.vue';
 import Card from '@/components/Card.vue';
+import HouseholdContact from '@/components/HouseholdContact.vue';
 
 export default {
   name: 'Tools',
@@ -33,7 +30,8 @@ export default {
     AttendeeForm,
     Card,
     GuestList,
-    ContactInfoForm
+    ContactInfoForm,
+    HouseholdContact,
   },
   data: () => ({
     contactInfo: {
@@ -46,6 +44,15 @@ export default {
     hashword: 'Hashword',
     attendees: [],
   }),
+  methods: {
+    addAttendee(attendee) {
+      console.log('add attendee' + attendee);
+      this.attendees.push(attendee);
+    },
+    deleteAttendee(index) {
+      this.attendees.splice(index, 1);
+    }
+  },
   computed: {
     fancyAddress() {
       return this.contactInfo.address === '' ? 'Address'
@@ -55,10 +62,6 @@ export default {
 };
 </script>
 <style scoped>
-.guestForm, .attendeeForm {
-  margin: auto;
-  margin-bottom: 20px;
-}
 .contact-info__top {
   display: flex;
 }

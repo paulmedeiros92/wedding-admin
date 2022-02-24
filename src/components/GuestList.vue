@@ -4,13 +4,17 @@
       <md-table-toolbar>
         <h1 class="md-title">{{title}}</h1>
       </md-table-toolbar>
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="Hashword" md-sort-by="id" md-numeric>123kljdsklkj35</md-table-cell>
+      <md-table-row slot="md-table-row" slot-scope="{ item, index }">
         <md-table-cell md-label="First Name" md-sort-by="firstName">{{ item.firstName }}</md-table-cell>
         <md-table-cell md-label="Last Name" md-sort-by="lastName">{{ item.lastName }}</md-table-cell>
         <md-table-cell md-label="Food Selection" md-sort-by="food">{{ item.food }}</md-table-cell>
         <md-table-cell md-label="Child?">{{ item.isChild }}</md-table-cell>
         <md-table-cell md-label="Notes" md-sort-by="notes">{{ item.notes }}</md-table-cell>
+        <md-table-cell md-sort-by="notes">
+          <md-button class="md-icon-button md-raised md-accent" @click="() => deleteEvent(index)">
+            <md-icon>delete</md-icon>
+          </md-button>
+        </md-table-cell>
       </md-table-row>
     </md-table>
   </div>
@@ -27,6 +31,11 @@ export default {
     },
     guestList: Array
   },
+  methods: {
+    deleteEvent(index) {
+      this.$emit('delete', index);
+    }
+  }
 };
 </script>
 

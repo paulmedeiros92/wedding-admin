@@ -10,7 +10,7 @@
     </div>
     <Card class="md-layout-item md-size-100" title="Household (Preview)">
       <template v-slot:content>
-        <HouseholdContact :hashword="hashword" :email="form.email" :address="fancyAddress" />
+        <HouseholdContact :hashword="hashword" :email="fancyEmail" :address="fancyAddress" />
         <GuestList title="Guests" :guestList="attendees" @delete="(index) => deleteAttendee(index)" />
       </template>
     </Card>
@@ -91,6 +91,9 @@ export default {
     fancyAddress() {
       return !this.form.address ? 'Address'
         : `${this.form.address}, ${this.form.city} ${this.form.province} ${this.form.country}`;
+    },
+    fancyEmail() {
+      return !this.form.email ? 'test@testerton.com' : this.form.email;
     }
   },
   validations: {
@@ -122,6 +125,9 @@ export default {
 <style scoped>
 .contact-info__top {
   display: flex;
+}
+.household-contact {
+  margin-bottom: 20px;
 }
 .guestList {
   margin: auto;

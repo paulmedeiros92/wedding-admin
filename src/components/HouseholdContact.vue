@@ -7,7 +7,7 @@
       <span class="md-list-item-text">{{ email }}</span>
     </div>
     <md-icon>home</md-icon>
-    <span class="md-list-item-text">{{ fancyAddress }}</span>
+    <span class="md-list-item-text">{{ address }}</span>
   </div>
 </template>
 <script>

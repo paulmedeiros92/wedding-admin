@@ -2,7 +2,7 @@
   <div class="about md-layout">
     <div class="about__input md-layout-item md-size-100 md-layout">
       <Card class="md-layout-item md-size-50 md-small-size-100" title="Contact Info">
-        <template v-slot:content><ContactInfoForm v-model="contactInfo" /></template>
+        <template v-slot:content><ContactInfoForm v-model="form" /></template>
       </Card>
       <Card class="md-layout-item md-size-50 md-small-size-100" title="Attendee">
         <template v-slot:content><AttendeeForm @attendee="(event) => addAttendee(event)" /></template>
@@ -10,17 +10,21 @@
     </div>
     <Card class="md-layout-item md-size-100" title="Household (Preview)">
       <template v-slot:content>
-        <HouseholdContact :hashword="hashword" :email="contactInfo.email" :address="fancyAddress" />
+        <HouseholdContact :hashword="hashword" :email="form.email" :address="fancyAddress" />
         <GuestList title="Guests" :guestList="attendees" @delete="(index) => deleteAttendee(index)" />
       </template>
     </Card>
-    <md-button class="md-raised md-accent finalize">Finalize</md-button>
+    <md-button class="md-raised md-accent finalize" @click="validateUser">Finalize</md-button>
     <md-snackbar md-position="center" :md-duration="isInfinity ? Infinity : duration" :md-active.sync="showSnackbar" md-persistent>
       <span>{{ snackText }}</span>
     </md-snackbar>
   </div>
 </template>
 <script>
+import { vuelidateMixin } from 'vuelidate';
+import {
+  required, email, minLength,
+} from 'vuelidate/lib/validators';
 import AttendeeForm from '@/components/AttendeeForm.vue';
 import GuestList from '@/components/GuestList.vue';
 import ContactInfoForm from '@/components/ContactInfoForm.vue';
@@ -29,6 +33,7 @@ import HouseholdContact from '@/components/HouseholdContact.vue';
 
 export default {
   name: 'Tools',
+  mixins: vuelidateMixin,
   components: {
     AttendeeForm,
     Card,
@@ -36,13 +41,16 @@ export default {
     ContactInfoForm,
     HouseholdContact,
   },
+  provide() {
+    return { $v: this.$v };
+  },
   data: () => ({
-    contactInfo: {
+    form: {
       address: '',
       city: '',
       province: '',
       country: '',
-      email: 'Email',
+      email: '',
     },
     hashword: 'Hashword',
     attendees: [],
@@ -61,12 +69,50 @@ export default {
       const removed = this.attendees.splice(index, 1)[0];
       this.showSnackbar = true;
       this.snackText = `Removed ${removed.firstName} ${removed.lastName} from the list.`;
-    }
+    },
+    clearForm() {
+      this.$v.$reset();
+      this.form.address = null;
+      this.form.city = null;
+      this.form.province = null;
+      this.form.country = null;
+      this.form.email = null;
+    },
+    validateUser() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.clearForm();
+      }
+    },
   },
   computed: {
     fancyAddress() {
-      return this.contactInfo.address === '' ? 'Address'
-        : `${this.contactInfo.address}, ${this.contactInfo.city} ${this.contactInfo.province} ${this.contactInfo.country}`;
+      return this.form.address === '' ? 'Address'
+        : `${this.form.address}, ${this.form.city} ${this.form.province} ${this.form.country}`;
+    }
+  },
+  validations: {
+    form: {
+      address: {
+        required,
+        maxLength: minLength(3)
+      },
+      city: {
+        required,
+        maxLength: minLength(3)
+      },
+      province: {
+        required,
+        maxLength: minLength(2)
+      },
+      country: {
+        required,
+        maxLength: minLength(2)
+      },
+      email: {
+        required,
+        email
+      }
     }
   },
 };

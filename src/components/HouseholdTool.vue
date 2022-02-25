@@ -15,6 +15,9 @@
       </template>
     </Card>
     <md-button class="md-raised md-accent finalize">Finalize</md-button>
+    <md-snackbar md-position="center" :md-duration="isInfinity ? Infinity : duration" :md-active.sync="showSnackbar" md-persistent>
+      <span>{{ snackText }}</span>
+    </md-snackbar>
   </div>
 </template>
 <script>
@@ -43,14 +46,21 @@ export default {
     },
     hashword: 'Hashword',
     attendees: [],
+    snackText: 'Add a tasty description!',
+    showSnackbar: false,
+    duration: 4000,
+    isInfinity: false
   }),
   methods: {
     addAttendee(attendee) {
-      console.log('add attendee' + attendee);
       this.attendees.push(attendee);
+      this.snackText = `Added ${attendee.firstName} ${attendee.lastName} to the list.`;
+      this.showSnackbar = true;
     },
     deleteAttendee(index) {
-      this.attendees.splice(index, 1);
+      const removed = this.attendees.splice(index, 1)[0];
+      this.showSnackbar = true;
+      this.snackText = `Removed ${removed.firstName} ${removed.lastName} from the list.`;
     }
   },
   computed: {

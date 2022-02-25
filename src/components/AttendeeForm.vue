@@ -1,8 +1,8 @@
 <template>
   <div class="attendeeForm">
     <form novalidate class="md-layout" @submit.prevent="validateUser">
-      <div class="md-layout md-gutter">
-        <div class="md-layout-item md-small-size-100">
+      <div class="md-layout-item md-size-100 md-layout md-gutter">
+        <div class="md-layout-item md-small-size-50">
           <md-field :class="getValidationClass('firstName')">
             <label for="first-name">First Name</label>
             <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="form.firstName" :disabled="sending" />
@@ -11,7 +11,7 @@
           </md-field>
         </div>
 
-        <div class="md-layout-item md-small-size-100">
+        <div class="md-layout-item md-small-size-50">
           <md-field :class="getValidationClass('lastName')">
             <label for="last-name">Last Name</label>
             <md-input name="last-name" id="last-name" autocomplete="family-name" v-model="form.lastName" :disabled="sending" />
@@ -21,11 +21,11 @@
         </div>
       </div>
 
-      <div class="md-layout md-gutter">
-        <div class="md-layout-item md-small-size-100">
+      <div class="md-layout-item md-size-100 md-layout md-gutter">
+        <div class="md-layout-item md-small-size-50">
           <md-checkbox v-model="form.isChild">Child meal (0-10 yrs)</md-checkbox>
         </div>
-        <div class="md-layout-item md-small-size-100">
+        <div class="md-layout-item md-small-size-50">
           <md-field :class="getValidationClass('food')">
             <label for="food">Food</label>
             <md-select name="food" id="food" v-model="form.food" md-dense :disabled="sending">
@@ -36,13 +36,11 @@
         </div>
       </div>
 
-      <div class="md-layout md-gutter">
-        <div class="md-layout-item md-small-size-100">
-          <md-field>
-            <label for="notes">Notes</label>
-            <md-textarea name="notes" id="notes" v-model="form.notes" :disabled="sending" md-autogrow></md-textarea>
-          </md-field>
-        </div>
+      <div class="md-layout-item md-size-100 md-layout md-gutter">
+        <md-field>
+          <label for="notes">Notes</label>
+          <md-textarea name="notes" id="notes" v-model="form.notes" :disabled="sending" md-autogrow></md-textarea>
+        </md-field>
       </div>
       <md-button type="submit" class="md-raised md-primary" :disabled="sending">Add</md-button>
     </form>

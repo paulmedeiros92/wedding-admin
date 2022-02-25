@@ -1,13 +1,17 @@
 <template>
-  <div class="household-contact">
-    <div class="household-contact__top">
-      <md-icon>key</md-icon>
-      <span class="md-list-item-text">{{ hashword }}</span>
-      <md-icon>email</md-icon>
-      <span class="md-list-item-text">{{ email }}</span>
+  <div class="md-layout">
+    <div class="md-layout-item md-small-size-33 md-large-size-50">
+      <md-icon>home</md-icon>
+      <span>{{ address }}</span>
     </div>
-    <md-icon>home</md-icon>
-    <span class="md-list-item-text">{{ address }}</span>
+    <div class="md-layout-item md-small-size-33 md-large-size-50">
+      <md-icon>email</md-icon>
+      <span>{{ email }}</span>
+    </div>
+    <div class="md-layout-item md-small-size-33 md-large-size-50">
+      <md-icon>key</md-icon>
+      <span>{{ hashword }}</span>
+    </div>
   </div>
 </template>
 <script>
@@ -21,9 +25,9 @@ export default {
   }
 };
 </script>
-<style scoped>
-.household-contact__top {
-  display: flex;
+<style lang="scss" scoped>
+.item {
+  text-align: left;
 }
 </style>
 

@@ -52,7 +52,7 @@ export default {
       country: '',
       email: '',
     },
-    hashword: 'Hashword',
+    hashword: 'alk4j0329j8f0q9',
     attendees: [],
     snackText: 'Add a tasty description!',
     showSnackbar: false,
@@ -82,12 +82,14 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.clearForm();
+        this.showSnackbar = true;
+        this.snackText = `Added ${this.hashword} to database.`;
       }
     },
   },
   computed: {
     fancyAddress() {
-      return this.form.address === '' ? 'Address'
+      return !this.form.address ? 'Address'
         : `${this.form.address}, ${this.form.city} ${this.form.province} ${this.form.country}`;
     }
   },
@@ -95,7 +97,7 @@ export default {
     form: {
       address: {
         required,
-        maxLength: minLength(3)
+        maxLength: minLength(3),
       },
       city: {
         required,

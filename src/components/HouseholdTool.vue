@@ -10,7 +10,7 @@
     </div>
     <Card class="md-layout-item md-size-100" title="Household (Preview)">
       <template v-slot:content>
-        <HouseholdContact :hashword="hashword" :email="fancyEmail" :address="fancyAddress" />
+        <HouseholdContact hashword="N/A" :email="fancyEmail" :address="fancyAddress" />
         <GuestList title="Guests" :guestList="attendees" @delete="(index) => deleteAttendee(index)" />
       </template>
     </Card>
@@ -25,6 +25,7 @@ import { vuelidateMixin } from 'vuelidate';
 import {
   required, email, minLength,
 } from 'vuelidate/lib/validators';
+import firebaseService from '@/services/firebase-service.js';
 import AttendeeForm from '@/components/AttendeeForm.vue';
 import GuestList from '@/components/GuestList.vue';
 import ContactInfoForm from '@/components/ContactInfoForm.vue';
@@ -52,7 +53,6 @@ export default {
       country: '',
       email: '',
     },
-    hashword: 'alk4j0329j8f0q9',
     attendees: [],
     snackText: 'Add a tasty description!',
     showSnackbar: false,
@@ -61,7 +61,7 @@ export default {
   }),
   methods: {
     addAttendee(attendee) {
-      this.attendees.push(attendee);
+      this.attendees = [...this.attendees, attendee];
       this.snackText = `Added ${attendee.firstName} ${attendee.lastName} to the list.`;
       this.showSnackbar = true;
     },
@@ -77,13 +77,26 @@ export default {
       this.form.province = null;
       this.form.country = null;
       this.form.email = null;
+      this.attendees = [];
     },
     validateUser() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.clearForm();
+        const households = [{...this.form, attendees: this.attendees }];
+        console.log(households);
+        firebaseService.setHousehold(households)
+          .then(() => {
+            this.showSnackbar = true;
+            this.snackText = `Added ${this.address} to database.`;
+          })
+          .catch(() => {
+            this.showSnackbar = true;
+            this.snackText = `Failed to add ${this.address} to database.`;
+          });
+      } else {
         this.showSnackbar = true;
-        this.snackText = `Added ${this.hashword} to database.`;
+        this.snackText = `Invalid form`;
       }
     },
   },

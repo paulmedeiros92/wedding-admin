@@ -14,7 +14,7 @@ const store = new Vuex.Store({
   state: {
     isLoading: false,
     error: null,
-    guestList: [],
+    households: [],
   },
   mutations: {
     setLoading(state, isLoading) {
@@ -23,31 +23,31 @@ const store = new Vuex.Store({
     setError(state, error) {
       state.error = error;
     },
-    setGuestList(state, guestList) {
-      state.guestList = guestList;
+    setHouseholds(state, households) {
+      state.households = households;
     }
   },
   actions: {
-    getGuestList({ commit }) {
+    getHouseholds({ commit }) {
       commit('setLoading', true);
-      firebaseService.getGuestList()
-        .then((result) => commit('setGuestList', result.data.data))
+      firebaseService.getHouseholds()
+        .then((result) => commit('setHouseholds', result.data.data))
         .catch((error) => commit('setError', error))
         .finally(() => commit('setLoading', false));
     }
   },
   getters: {
     guestLength: state => {
-      return state.guestList.length;
+      return state.households.length;
     },
     guestsAttending: state => {
-      return state.guestList.filter((guest) => guest.isAttending).length;
+      return state.households.filter((guest) => guest.isAttending).length;
     },
     guestsChild: state => {
-      return state.guestList.filter((guest) => guest.isChild).length;
+      return state.households.filter((guest) => guest.isChild).length;
     },
     guestsViewed: state => {
-      return state.guestList.filter((guest) => guest.hasViewed).length;
+      return state.households.filter((guest) => guest.hasViewed).length;
     }
   }
 });

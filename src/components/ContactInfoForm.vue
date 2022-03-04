@@ -20,7 +20,7 @@
         <div class="md-layout-item md-small-size-100">
           <md-field :class="getValidationClass('province')">
             <label for="province">State/Province</label>
-            <md-input type="province" name="province" id="province" autocomplete="province" v-model="form.province" :disabled="sending" />
+            <md-input type="province" name="province" id="province" autocomplete="address-level1" v-model="form.province" :disabled="sending" />
             <span class="md-error" v-if="!$v.form.province.required">The province is required</span>
             <span class="md-error" v-else-if="!$v.form.province.province">Invalid province</span>
           </md-field>

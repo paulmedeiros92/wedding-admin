@@ -82,13 +82,12 @@ export default {
     validateUser() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.clearForm();
         const households = [{...this.form, attendees: this.attendees }];
-        console.log(households);
         firebaseService.setHousehold(households)
           .then(() => {
             this.showSnackbar = true;
             this.snackText = `Added ${this.address} to database.`;
+            this.clearForm();
           })
           .catch(() => {
             this.showSnackbar = true;

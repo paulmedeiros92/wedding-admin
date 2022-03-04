@@ -16,7 +16,7 @@ export default {
   },
   computed: mapState({
     isLoading: state => state.isLoading,
-    households: state => state.guestList,
+    households: state => state.households,
   })
 };
 </script>

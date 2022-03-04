@@ -37,18 +37,19 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-    guestLength: state => {
-      return state.households.length;
+    householdsViewed: state => {
+      return state.households.filter((household) => household.hasViewed).length;
     },
-    guestsAttending: state => {
-      return state.households.filter((guest) => guest.isAttending).length;
+    attendees: state => {
+      return state.households.reduce((prev, curr)  => prev.concat(curr.attendees), []);
     },
-    guestsChild: state => {
-      return state.households.filter((guest) => guest.isChild).length;
+    attendeesChild: (state, getters) => {
+      return getters.attendees.filter((household) => household.isChild).length;
     },
-    guestsViewed: state => {
-      return state.households.filter((guest) => guest.hasViewed).length;
-    }
+    attendeesAttending: state => {
+      return state.households.filter((household) => household.isAttending)
+        .reduce((prev, curr) => prev + curr.attendees.length, 0);
+    },
   }
 });
 

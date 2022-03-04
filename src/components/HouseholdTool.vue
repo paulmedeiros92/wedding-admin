@@ -86,12 +86,12 @@ export default {
         firebaseService.setHousehold(households)
           .then(() => {
             this.showSnackbar = true;
-            this.snackText = `Added ${this.address} to database.`;
+            this.snackText = `Added ${this.form.email} to database.`;
             this.clearForm();
           })
           .catch(() => {
             this.showSnackbar = true;
-            this.snackText = `Failed to add ${this.address} to database.`;
+            this.snackText = `Failed to add ${this.form.email} to database.`;
           });
       } else {
         this.showSnackbar = true;

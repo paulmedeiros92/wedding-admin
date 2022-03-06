@@ -37,18 +37,25 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-    householdsViewed: state => {
-      return state.households.filter((household) => household.hasViewed).length;
-    },
     attendees: state => {
-      return state.households.reduce((prev, curr)  => prev.concat(curr.attendees), []);
+      return state.households
+        ? state.households.reduce((prev, curr) => {
+          return prev.concat(curr.attendees.map((attendee) => {
+            const {hasViewed, hashWord, isAttending } = curr;
+            const address = `${curr.address}, ${curr.city} ${curr.province} ${curr.country}`;
+            return {...attendee, hasViewed, hashWord, isAttending, address };
+          }));
+        }, [])
+        : [];
     },
-    attendeesChild: (state, getters) => {
-      return getters.attendees.filter((household) => household.isChild).length;
+    attendeesChildren: (state, getters) => {
+      return getters.attendees.filter((attendee) => attendee.isChild);
     },
-    attendeesAttending: state => {
-      return state.households.filter((household) => household.isAttending)
-        .reduce((prev, curr) => prev + curr.attendees.length, 0);
+    attendeesAttending: (state, getters) => {
+      return getters.attendees.filter((attendee) => attendee.isAttending);
+    },
+    attendeesViewed: (state, getters) => {
+      return getters.attendees.filter((attendee) => attendee.hasViewed);
     },
   }
 });

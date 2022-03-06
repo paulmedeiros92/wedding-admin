@@ -1,8 +1,8 @@
 <template>
   <div class="statistics">
-    <Stat title="Attending" :value="$store.getters.attendeesAttending" />
-    <Stat title="Children" :value="$store.getters.attendeesChild" />
-    <Stat title="Viewed" :value="$store.getters.householdsViewed" />
+    <Stat title="Attending" :value="$store.getters.attendeesAttending.length" />
+    <Stat title="Children" :value="$store.getters.attendeesChildren.length" />
+    <Stat title="Viewed" :value="$store.getters.attendeesViewed.length" />
   </div>
 </template>
 

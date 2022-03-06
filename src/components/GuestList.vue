@@ -10,7 +10,7 @@
         <md-table-cell md-label="Food Selection" md-sort-by="food">{{ item.food }}</md-table-cell>
         <md-table-cell md-label="Child?">{{ item.isChild }}</md-table-cell>
         <md-table-cell md-label="Notes" md-sort-by="notes">{{ item.notes }}</md-table-cell>
-        <md-table-cell md-sort-by="notes">
+        <md-table-cell>
           <md-button class="md-icon-button md-raised md-accent" @click="() => deleteEvent(index)">
             <md-icon>delete</md-icon>
           </md-button>

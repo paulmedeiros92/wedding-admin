@@ -9,6 +9,8 @@ export default {
   },
   setHousehold(households) {
     return axios.post(`${baseURL}/app/api/households`, households);
+  },
+  updateHousehold(household) {
+    return axios.put(`${baseURL}/app/api/households/${household.hashWord}`, household);
   }
-
 };

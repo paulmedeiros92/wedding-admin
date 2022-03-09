@@ -37,6 +37,7 @@ const store = new Vuex.Store({
     }
   },
   getters: {
+    households: state => state.households,
     attendees: state => {
       return state.households
         ? state.households.reduce((prev, curr) => {

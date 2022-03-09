@@ -8,6 +8,9 @@
       <md-button @click="() => $router.push({name: 'tools'})">
         Tools
       </md-button>
+      <md-button @click="() => $router.push({name: 'mail'})">
+        Mail
+      </md-button>
     </md-toolbar>
     <router-view/>
     

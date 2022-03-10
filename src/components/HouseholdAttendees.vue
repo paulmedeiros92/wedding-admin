@@ -1,7 +1,7 @@
 <template>
   <div class="household-attendees">
     <md-table
-      v-model="attendees"
+      v-model="items"
       :md-sort="currentSort"
       @update:mdSort="(value) => currentSort = value"
       :md-sort-order="currentSortOrder"
@@ -9,8 +9,17 @@
       :md-sort-fn="customSort"
       md-card>
       <md-table-toolbar>
-        <h1 class="md-title">{{title}}</h1>
+        <div class="md-toolbar-section-start">
+          <h1 class="md-title">{{title}}</h1>
+        </div>
+        <md-field md-clearable class="md-toolbar-section-end">
+          <md-input placeholder="Search by..." v-model="search" @input="searchOnTable" />
+        </md-field>
       </md-table-toolbar>
+      <md-table-empty-state
+        md-label="Nothing to see here..."
+        :md-description="`Nothing found for this '${search}' query. Try a different search term.`">
+      </md-table-empty-state>
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Hashword" md-sort-by="hashWord">{{ item.hashWord }}</md-table-cell>
         <md-table-cell md-label="First Name" md-sort-by="firstName">{{ item.firstName }}</md-table-cell>
@@ -52,7 +61,12 @@ export default {
   data: () => ({
     currentSort: 'isAttending',
     currentSortOrder: 'asc',
+    search: null,
+    items: [],
   }),
+  created() {
+    this.items = this.attendees;
+  },
   methods: {
     customSort (value) {
       return value.sort((a, b) => {
@@ -68,6 +82,13 @@ export default {
           b[sortBy].localeCompare(a[sortBy])
           : +b[sortBy] - +a[sortBy];
       });
+    },
+    searchOnTable () {
+      if (this.search) {
+        this.items = this.attendees.filter((attendee) => JSON.stringify(attendee).toLowerCase().includes(this.search.toLowerCase()));
+      } else {
+        this.items = this.attendees;
+      }
     }
   },
 };

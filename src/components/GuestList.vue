@@ -11,8 +11,11 @@
         <md-table-cell md-label="Child?">{{ item.isChild }}</md-table-cell>
         <md-table-cell md-label="Notes" md-sort-by="notes">{{ item.notes }}</md-table-cell>
         <md-table-cell>
-          <md-button class="md-icon-button md-raised md-accent" @click="() => deleteEvent(index)">
+          <md-button class="md-icon-button md-raised md-accent" @click="$emit('delete', index)">
             <md-icon>delete</md-icon>
+          </md-button>
+          <md-button class="md-icon-button md-raised md-accent" @click="$emit('edit', index)">
+            <md-icon>edit</md-icon>
           </md-button>
         </md-table-cell>
       </md-table-row>
@@ -31,11 +34,6 @@ export default {
     },
     guestList: Array
   },
-  methods: {
-    deleteEvent(index) {
-      this.$emit('delete', index);
-    }
-  }
 };
 </script>
 

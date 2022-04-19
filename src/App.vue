@@ -34,4 +34,7 @@ export default {
 .md-title {
   text-align: left;
 }
+.md-table-cell-container {
+  text-align: left;
+}
 </style>

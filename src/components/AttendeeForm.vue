@@ -8,7 +8,6 @@
             <md-input name="first-name" id="first-name" autocomplete="given-name"
               v-model="form.firstName" :disabled="sending" @keyup.enter="validateUser" />
             <span class="md-error" v-if="!$v.form.firstName.required">The first name is required</span>
-            <span class="md-error" v-else-if="!$v.form.firstName.minlength">Invalid first name</span>
           </md-field>
         </div>
 
@@ -18,7 +17,6 @@
             <md-input name="last-name" id="last-name" autocomplete="family-name"
               v-model="form.lastName" :disabled="sending" @keyup.enter="validateUser" />
             <span class="md-error" v-if="!$v.form.lastName.required">The last name is required</span>
-            <span class="md-error" v-else-if="!$v.form.lastName.minlength">Invalid last name</span>
           </md-field>
         </div>
       </div>
@@ -52,9 +50,7 @@
 
 <script>
 import { vuelidateMixin } from 'vuelidate';
-import {
-  required, minLength,
-} from 'vuelidate/lib/validators';
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   name: 'AttendeeForm',
@@ -77,11 +73,9 @@ export default {
     form: {
       firstName: {
         required,
-        minLength: minLength(3)
       },
       lastName: {
         required,
-        minLength: minLength(3)
       },
       isChild: {
         required,

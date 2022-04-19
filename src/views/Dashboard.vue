@@ -5,11 +5,6 @@
       title="Guests"
       :attendees="$store.getters.attendees"
       :isLoading="$store.getters.isLoading" />
-    <common-table
-      title="Guests"
-      :items="attendees"
-      :labels="labels"
-      currentSort=""/>
   </div>
 </template>
 
@@ -17,7 +12,6 @@
 // @ is an alias to /src
 import Statistics from '@/components/Statistics.vue';
 import HouseholdAttendees from '@/components/HouseholdAttendees';
-import CommonTable from '@/common/Table.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -25,7 +19,6 @@ export default {
   components: {
     Statistics,
     HouseholdAttendees,
-    CommonTable,
   },
   data: () => ({
     labels: [

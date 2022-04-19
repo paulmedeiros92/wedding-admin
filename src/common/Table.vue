@@ -22,9 +22,9 @@
       </md-table-empty-state>
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell
-          v-for="column of columns"
+          v-for="(column, index) of columns"
           :key="column.label"
-          :md-label="column.label"
+          :md-label="labels[index]"
           :md-sort-by="column.key">
           <md-icon
             v-if="column.isBoolean"
@@ -51,8 +51,8 @@ export default {
       type: Array,
       default: () => [],
     },
-    columns: {
-      type: Object,
+    labels: {
+      type: Array,
       required: true,
     },
     currentSort: {
@@ -98,6 +98,14 @@ export default {
       }
     }
   },
+  computed: {
+    columns() {
+      const item = this.items[0];
+      return Object.keys(item).map((key) => {
+        item[key]
+      });
+    }
+  }
 };
 </script>
 

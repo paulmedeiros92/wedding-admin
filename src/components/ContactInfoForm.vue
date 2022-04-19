@@ -38,8 +38,7 @@
       <md-field :class="getValidationClass('email')">
         <label for="email">Email</label>
         <md-input type="email" name="email" id="email" autocomplete="email" v-model="form.email" :disabled="sending" />
-        <span class="md-error" v-if="!$v.form.email.required">The email is required</span>
-        <span class="md-error" v-else-if="!$v.form.email.email">Invalid email</span>
+        <span class="md-error" v-if="!$v.form.email.email">Invalid email</span>
       </md-field>
     </form>
   </div>

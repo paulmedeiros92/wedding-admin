@@ -11,7 +11,7 @@
     <Card class="md-layout-item md-size-100" title="Household (Preview)">
       <template v-slot:content>
         <HouseholdContact hashword="N/A" :email="fancyEmail" :address="fancyAddress" />
-        <GuestList title="Guests" :guestList="attendees" @delete="(index) => deleteAttendee(index)" />
+        <GuestList title="Guests" :guestList="attendees" @delete="deleteAttendee" @edit="editAttendee"/>
       </template>
     </Card>
     <md-button class="md-raised md-accent finalize" @click="validateUser">Finalize</md-button>
@@ -57,8 +57,23 @@ export default {
     snackText: 'Add a tasty description!',
     showSnackbar: false,
     duration: 4000,
-    isInfinity: false
+    isInfinity: false,
+    household: null,
   }),
+  async created() {
+    const householdId = this.$route.params.id;
+    if (householdId) {
+      this.household = (await firebaseService.getHouseholdById(householdId)).data.data;
+      this.attendees = this.household.attendees;
+      this.form = {
+        address: this.household.address,
+        city: this.household.city,
+        province: this.household.province,
+        country: this.household.country,
+        email: this.household.email,
+      };
+    }
+  },
   methods: {
     addAttendee(attendee) {
       this.attendees = [...this.attendees, attendee];
@@ -69,6 +84,10 @@ export default {
       const removed = this.attendees.splice(index, 1)[0];
       this.showSnackbar = true;
       this.snackText = `Removed ${removed.firstName} ${removed.lastName} from the list.`;
+    },
+    editAttendee(index) {
+      const removed = this.attendees.splice(index, 1)[0];
+      // TODO: finish this by adding the props to the attendee form
     },
     clearForm() {
       this.$v.$reset();
@@ -82,12 +101,13 @@ export default {
     validateUser() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        const households = [{...this.form, attendees: this.attendees }];
-        firebaseService.setHousehold(households)
+        const households = [{...this.household, ...this.form, attendees: this.attendees }];
+        firebaseService.postHouseholds(households)
           .then(() => {
             this.showSnackbar = true;
             this.snackText = `Added ${this.form.email} to database.`;
             this.clearForm();
+            this.$router.push({ path: '/tools/'});
           })
           .catch(() => {
             this.showSnackbar = true;
@@ -127,7 +147,6 @@ export default {
         maxLength: minLength(2)
       },
       email: {
-        required,
         email
       }
     }

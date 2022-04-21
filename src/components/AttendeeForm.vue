@@ -69,6 +69,9 @@ export default {
     adultFood: ["Chicken", "Fish", "Beef", "Vegetarian"],
     childFood: ["Chicken Nugzz", "Grilled Cheezze"],
   }),
+  props: {
+    attendee: Object,
+  },
   validations: {
     form: {
       firstName: {
@@ -111,6 +114,16 @@ export default {
   computed: {
     foods: function () {
       return this.form.isChild ? this.childFood : this.adultFood;
+    }
+  },
+  watch: {
+    attendee: {
+      handler(attendee) {
+        if (attendee) {
+          this.form = { ...attendee };
+        }
+      },
+      immediate: true,
     }
   }
 };

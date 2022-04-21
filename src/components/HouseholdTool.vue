@@ -5,7 +5,7 @@
         <template v-slot:content><ContactInfoForm v-model="form" /></template>
       </Card>
       <Card class="md-layout-item md-size-50 md-small-size-100" title="Attendee">
-        <template v-slot:content><AttendeeForm @attendee="(event) => addAttendee(event)" /></template>
+        <template v-slot:content><AttendeeForm :attendee="attendeeForEdit" @attendee="(event) => addAttendee(event)" /></template>
       </Card>
     </div>
     <Card class="md-layout-item md-size-100" title="Household (Preview)">
@@ -59,6 +59,7 @@ export default {
     duration: 4000,
     isInfinity: false,
     household: null,
+    attendeeForEdit: null,
   }),
   async created() {
     const householdId = this.$route.params.id;
@@ -86,8 +87,7 @@ export default {
       this.snackText = `Removed ${removed.firstName} ${removed.lastName} from the list.`;
     },
     editAttendee(index) {
-      const removed = this.attendees.splice(index, 1)[0];
-      // TODO: finish this by adding the props to the attendee form
+      this.attendeeForEdit = this.attendees.splice(index, 1)[0];
     },
     clearForm() {
       this.$v.$reset();

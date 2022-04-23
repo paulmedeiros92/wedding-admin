@@ -169,6 +169,7 @@ export default {
   right: 40px;
   height: 50px;
   width: 150px;
+  z-index: 2;
 }
 </style>
 

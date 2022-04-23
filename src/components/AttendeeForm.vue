@@ -26,10 +26,10 @@
           <md-checkbox v-model="form.isChild">Kidz meal (0-10 yrs)</md-checkbox>
         </div>
         <div class="md-layout-item md-small-size-50">
-          <md-field :class="getValidationClass('food')">
+          <md-field v-if="!form.isChild" :class="getValidationClass('food')">
             <label for="food">Entrees</label>
             <md-select name="food" id="food" v-model="form.food" md-dense :disabled="sending">
-              <md-option v-for="food in foods" :value="food" :key="food">{{food}}</md-option>
+              <md-option v-for="food in adultFood" :value="food" :key="food">{{food}}</md-option>
             </md-select>
             <span class="md-error" v-if="$v.form.food.required">The food is required</span>
           </md-field>
@@ -66,8 +66,7 @@ export default {
     userSaved: false,
     sending: false,
     lastUser: null,
-    adultFood: ["Chicken", "Fish", "Beef", "Vegetarian"],
-    childFood: ["Chicken Nugzz", "Grilled Cheezze"],
+    adultFood: ["No Selection", "Chicken", "Lobster", "Vegetarian"],
   }),
   props: {
     attendee: Object,
@@ -109,11 +108,6 @@ export default {
         this.$emit('attendee', {...this.form});
         this.clearForm();
       }
-    }
-  },
-  computed: {
-    foods: function () {
-      return this.form.isChild ? this.childFood : this.adultFood;
     }
   },
   watch: {

@@ -4,8 +4,8 @@ import axios from "axios";
 const baseURL = 'http://localhost:5001/wedding-63917/us-central1';
 
 export default {
-  getHouseholdById(id) {
-    return axios.get(`${baseURL}/app/api/households/${id}`);
+  getHouseholdByMemberId(id) {
+    return axios.get(`${baseURL}/app/api/household/${id}`);
   },
   getAttendees() {
     return axios.get(`${baseURL}/app/api/attendees`);

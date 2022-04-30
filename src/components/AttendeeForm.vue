@@ -60,7 +60,7 @@ export default {
       firstName: null,
       lastName: null,
       isChild: false,
-      food: null,
+      food: "No Selection",
       notes: null,
     },
     userSaved: false,
@@ -99,7 +99,7 @@ export default {
       this.form.firstName = null;
       this.form.lastName = null;
       this.form.isChild = false;
-      this.form.food = null;
+      this.form.food = "No Selection";
       this.form.notes = null;
     },
     validateUser () {

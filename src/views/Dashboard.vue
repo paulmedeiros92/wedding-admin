@@ -19,6 +19,9 @@ export default {
     Statistics,
     HouseholdAttendees,
   },
+  mounted() {
+    this.$store.dispatch('getAttendees');
+  },
   computed: {
     ...mapState(['attendees', 'isLoading'])
   }

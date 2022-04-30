@@ -62,16 +62,16 @@ export default {
     attendeeForEdit: null,
   }),
   async created() {
-    const householdId = this.$route.params.id;
-    if (householdId) {
-      this.household = (await firebaseService.getHouseholdById(householdId)).data.data;
-      this.attendees = this.household.attendees;
+    const attendeeId = this.$route.params.id;
+    if (attendeeId) {
+      this.attendees = (await firebaseService.getHouseholdByMemberId(attendeeId)).data.data;
+      const attendeeRef = this.attendees[0];
       this.form = {
-        address: this.household.address,
-        city: this.household.city,
-        province: this.household.province,
-        country: this.household.country,
-        email: this.household.email,
+        address: attendeeRef.address,
+        city: attendeeRef.city,
+        province: attendeeRef.province,
+        country: attendeeRef.country,
+        email: attendeeRef.email,
       };
     }
   },
@@ -101,13 +101,12 @@ export default {
     validateUser() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        const attendees = this.attendees.map((attendee) => ({...attendee, ...this.form}))
+        const attendees = this.attendees.map((attendee) => ({...attendee, ...this.form}));
         firebaseService.postAttendees(attendees)
           .then(() => {
             this.showSnackbar = true;
             this.snackText = `Added ${this.form.email}'s attendees to database.`;
             this.clearForm();
-            this.$router.push({ path: '/tools/'}); // why redundant navigation?
           })
           .catch(() => {
             this.showSnackbar = true;

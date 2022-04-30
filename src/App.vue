@@ -16,13 +16,6 @@
     
   </div>
 </template>
-<script>
-export default {
-  mounted() {
-    this.$store.dispatch('getAttendees');
-  }
-};
-</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -17,21 +17,33 @@ export default {
     MailingList
   },
   methods: {
-    sendMail(index) {
-      const newHousehold = this.households[index];
-      newHousehold.isMailed = true;
-      firebaseService.updateHousehold(newHousehold);
+    async sendMail(selectedAttendee) {
+      const mailedAttendees = this.attendees.filter((attendee) => (
+        attendee.address === selectedAttendee.address &&
+        attendee.city === selectedAttendee.city &&
+        attendee.province === selectedAttendee.province &&
+        attendee.country === selectedAttendee.country
+      )).map((attendee) => ({...attendee, isMailed: !attendee.isMailed}));
+      await firebaseService.postAttendees(mailedAttendees);
+      this.$store.dispatch('getAttendees');
     }
   },
   computed: {
     ...mapState(['attendees']),
     mailingList: function () {
-      return this.attendees.map(({hashWord, attendees, address, city, province, country, isMailed}) => ({
-        hashWord,
-        name: `${attendees[0].firstName} ${attendees[0].lastName}`,
-        isMailed,
-        address: `${address}, ${city} ${province} ${country}`
-      }));
+      const householdSet = {};
+      this.attendees.forEach(({firstName, lastName, address, city, province, country, isMailed}) => {
+        householdSet[`${address}, ${city} ${province} ${country}`] = {
+          nameString: `${firstName} ${lastName}`,
+          isMailed,
+          addressString: `${address}, ${city} ${province} ${country}`,
+          address,
+          city,
+          province,
+          country
+        };
+      });
+      return Object.values(householdSet);
     }
   }
 };

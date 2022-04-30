@@ -11,16 +11,15 @@
       <md-table-toolbar>
         <h1 class="md-title">{{title}}</h1>
       </md-table-toolbar>
-      <md-table-row slot="md-table-row" slot-scope="{ item, index }">
-        <md-table-cell md-label="Hashword" md-sort-by="hashWord">{{ item.hashWord }}</md-table-cell>
-        <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
-        <md-table-cell md-label="Address" md-sort-by="address">{{ item.address }}</md-table-cell>
+      <md-table-row slot="md-table-row" slot-scope="{ item }">
+        <md-table-cell md-label="Name" md-sort-by="name">{{ item.nameString }}</md-table-cell>
+        <md-table-cell md-label="Address" md-sort-by="address">{{ item.addressString }}</md-table-cell>
         <md-table-cell md-label="Mailed?" md-sort-by="isMailed">
           <md-icon v-if="item.isMailed" style="color:green">check</md-icon>
           <md-icon v-else style="color:red">close</md-icon>
         </md-table-cell>
         <md-table-cell md-label="Mark Mailed">
-          <md-button class="md-icon-button md-raised md-primary" @click="() => deleteEvent(index)">
+          <md-button class="md-icon-button md-raised md-primary" @click="() => sendEvent(item)">
             <md-icon>send</md-icon>
           </md-button>
         </md-table-cell>
@@ -63,8 +62,8 @@ export default {
           : +b[sortBy] - +a[sortBy];
       });
     },
-    deleteEvent(index) {
-      this.$emit('send', index);
+    sendEvent(item) {
+      this.$emit('send', item);
     }
   },
 };

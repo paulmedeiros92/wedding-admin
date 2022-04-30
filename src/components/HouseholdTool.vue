@@ -101,17 +101,17 @@ export default {
     validateUser() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        const households = [{...this.household, ...this.form, attendees: this.attendees }];
-        firebaseService.postHouseholds(households)
+        const attendees = this.attendees.map((attendee) => ({...attendee, ...this.form}))
+        firebaseService.postAttendees(attendees)
           .then(() => {
             this.showSnackbar = true;
-            this.snackText = `Added ${this.form.email} to database.`;
+            this.snackText = `Added ${this.form.email}'s attendees to database.`;
             this.clearForm();
-            this.$router.push({ path: '/tools/'});
+            this.$router.push({ path: '/tools/'}); // why redundant navigation?
           })
           .catch(() => {
             this.showSnackbar = true;
-            this.snackText = `Failed to add ${this.form.email} to database.`;
+            this.snackText = `Failed to add ${this.form.email}'s attendees to database.`;
           });
       } else {
         this.showSnackbar = true;

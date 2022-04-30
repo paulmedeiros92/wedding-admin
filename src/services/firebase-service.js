@@ -10,8 +10,8 @@ export default {
   getAttendees() {
     return axios.get(`${baseURL}/app/api/attendees`);
   },
-  postHouseholds(households) {
-    return axios.post(`${baseURL}/app/api/households`, households);
+  postAttendees(attendees) {
+    return axios.post(`${baseURL}/app/api/attendees`, attendees);
   },
   updateHousehold(household) {
     return axios.put(`${baseURL}/app/api/households/${household.hashWord}`, household);

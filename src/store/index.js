@@ -35,13 +35,6 @@ const store = new Vuex.Store({
         .catch((error) => commit('setError', error))
         .finally(() => commit('setLoading', false));
     },
-    setAttendees({ commit }) {
-      commit('setLoading', true);
-      firebaseService.postAttendees()
-        .then((result) => commit('setAttendees', result.data.data))
-        .catch((error) => commit('setError', error))
-        .finally(() => commit('setLoading', false));
-    }
   },
   getters: {
     attendeesChildren: (state) => {

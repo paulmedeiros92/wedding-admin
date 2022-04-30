@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import MailingList from '@/components/MailingList.vue';
 import firebaseService from '@/services/firebase-service.js';
 
@@ -24,9 +24,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['households']),
+    ...mapState(['attendees']),
     mailingList: function () {
-      return this.$store.getters.households.map(({hashWord, attendees, address, city, province, country, isMailed}) => ({
+      return this.attendees.map(({hashWord, attendees, address, city, province, country, isMailed}) => ({
         hashWord,
         name: `${attendees[0].firstName} ${attendees[0].lastName}`,
         isMailed,

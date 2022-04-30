@@ -19,7 +19,7 @@
 <script>
 export default {
   mounted() {
-    this.$store.dispatch('getHouseholds');
+    this.$store.dispatch('getAttendees');
   }
 };
 </script>

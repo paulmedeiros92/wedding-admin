@@ -14,7 +14,7 @@ const store = new Vuex.Store({
   state: {
     isLoading: false,
     error: null,
-    households: [],
+    attendees: [],
   },
   mutations: {
     setLoading(state, isLoading) {
@@ -23,40 +23,28 @@ const store = new Vuex.Store({
     setError(state, error) {
       state.error = error;
     },
-    setHouseholds(state, households) {
-      state.households = households;
+    setAttendees(state, attendees) {
+      state.attendees = attendees;
     }
   },
   actions: {
-    getHouseholds({ commit }) {
+    getAttendees({ commit }) {
       commit('setLoading', true);
-      firebaseService.getHouseholds()
-        .then((result) => commit('setHouseholds', result.data.data))
+      firebaseService.getAttendees()
+        .then((result) => commit('setAttendees', result.data.data))
         .catch((error) => commit('setError', error))
         .finally(() => commit('setLoading', false));
     }
   },
   getters: {
-    households: state => state.households,
-    attendees: state => {
-      return state.households
-        ? state.households.reduce((prev, curr) => {
-          return prev.concat(curr.attendees.map((attendee) => {
-            const {hasViewed, hashWord, isAttending } = curr;
-            const address = `${curr.address}, ${curr.city} ${curr.province} ${curr.country}`;
-            return {...attendee, hasViewed, hashWord, isAttending, address };
-          }));
-        }, [])
-        : [];
+    attendeesChildren: (state) => {
+      return state.attendees.filter((attendee) => attendee.isChild);
     },
-    attendeesChildren: (state, getters) => {
-      return getters.attendees.filter((attendee) => attendee.isChild);
+    attendeesAttending: (state) => {
+      return state.attendees.filter((attendee) => attendee.isAttending);
     },
-    attendeesAttending: (state, getters) => {
-      return getters.attendees.filter((attendee) => attendee.isAttending);
-    },
-    attendeesViewed: (state, getters) => {
-      return getters.attendees.filter((attendee) => attendee.hasViewed);
+    attendeesViewed: (state) => {
+      return state.attendees.filter((attendee) => attendee.hasViewed);
     },
   }
 });

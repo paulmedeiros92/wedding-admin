@@ -1,12 +1,13 @@
 <template>
   <div class="statistics">
-    <Stat title="Attending" :value="$store.getters.attendeesAttending.length" />
-    <Stat title="Children" :value="$store.getters.attendeesChildren.length" />
-    <Stat title="Viewed" :value="$store.getters.attendeesViewed.length" />
+    <Stat title="Attending" :value="attendeesAttending.length" />
+    <Stat title="Children" :value="attendeesChildren.length" />
+    <Stat title="Viewed" :value="attendeesViewed.length" />
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Stat from './Stat.vue';
 
 export default {
@@ -16,6 +17,9 @@ export default {
   },
   components: {
     Stat
+  },
+  computed: {
+    ...mapGetters(['attendeesAttending', 'attendeesChildren', 'attendeesViewed'])
   }
 };
 </script>

@@ -22,7 +22,6 @@
         :md-description="`Nothing found for this '${search}' query. Try a different search term.`">
       </md-table-empty-state>
       <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single">
-        <md-table-cell md-label="Hashword" md-sort-by="hashWord">{{ item.hashWord }}</md-table-cell>
         <md-table-cell md-label="First Name" md-sort-by="firstName">{{ item.firstName }}</md-table-cell>
         <md-table-cell md-label="Last Name" md-sort-by="lastName">{{ item.lastName }}</md-table-cell>
         <md-table-cell md-label="Confirmed?" md-sort-by="isAttending">
@@ -65,8 +64,13 @@ export default {
     search: null,
     items: [],
   }),
-  created() {
-    this.items = this.attendees;
+  watch: {
+    attendees: {
+      handler(val) {
+        this.items = [...val];
+      },
+      immediate: true,
+    }
   },
   methods: {
     customSort (value) {
@@ -86,9 +90,7 @@ export default {
     },
     searchOnTable () {
       if (this.search) {
-        this.items = this.attendees.filter((attendee) => JSON.stringify(attendee).toLowerCase().includes(this.search.toLowerCase()));
-      } else {
-        this.items = this.attendees;
+        this.items = this.items.filter((attendee) => JSON.stringify(attendee).toLowerCase().includes(this.search.toLowerCase()));
       }
     },
     onSelect(item) {

@@ -57,7 +57,7 @@ import Card from "@/components/Card.vue";
 import HouseholdContact from "@/components/HouseholdContact.vue";
 
 export default {
-  name: "Tools",
+  name: "HouseholdTool",
   mixins: vuelidateMixin,
   components: {
     AttendeeForm,

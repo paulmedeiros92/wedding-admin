@@ -54,7 +54,7 @@
           item.food
         }}</md-table-cell>
         <md-table-cell md-label="Child?">
-          <md-icon v-if="item.hasViewed" style="color: green">check</md-icon>
+          <md-icon v-if="item.isChild" style="color: green">check</md-icon>
           <md-icon v-else style="color: red">close</md-icon>
         </md-table-cell>
         <md-table-cell md-label="Notes" md-sort-by="notes">{{

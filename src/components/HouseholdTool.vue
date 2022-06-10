@@ -129,6 +129,8 @@ export default {
       if (!this.$v.$invalid) {
         const attendees = this.attendees.map((attendee) => ({
           ...attendee,
+          firstName: attendee.firstName.trim(),
+          lastName: attendee.lastName.trim(),
           isAttending: false,
           ...this.form,
         }));

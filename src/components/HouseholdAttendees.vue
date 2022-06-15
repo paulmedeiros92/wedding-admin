@@ -7,7 +7,6 @@
       :md-sort-order="currentSortOrder"
       @update:mdSortOrder="(value) => (currentSortOrder = value)"
       :md-sort-fn="customSort"
-      @md-selected="onSelect"
       md-card
     >
       <md-table-toolbar>
@@ -60,11 +59,22 @@
         <md-table-cell md-label="Notes" md-sort-by="notes">{{
           item.notes
         }}</md-table-cell>
-        <md-table-cell md-label="Delete Requested">
-          <md-icon v-if="item.markedForDeletion" style="color: green"
-            >check</md-icon
+        <md-table-cell md-label="Actions">
+          <md-button
+            v-if="item.markedForDeletion"
+            @click="demarkForDeletion(item)"
+            class="md-icon-button md-raised md-primary"
+            title="Demark for deletion."
           >
-          <md-icon v-else style="color: red">close</md-icon>
+            <md-icon>refresh</md-icon>
+          </md-button>
+          <md-button
+            @click="onSelect(item)"
+            class="md-icon-button md-raised md-primary"
+            title="Go to household."
+          >
+            <md-icon>arrow_right</md-icon>
+          </md-button>
         </md-table-cell>
       </md-table-row>
     </md-table>
@@ -72,6 +82,8 @@
 </template>
 
 <script>
+import firebaseService from "../services/firebase-service";
+
 export default {
   name: "HouseholdAttendees",
   props: {
@@ -126,6 +138,19 @@ export default {
     },
     onSelect(item) {
       this.$router.push({ path: `/tools/${item.hashWord}` });
+    },
+    demarkForDeletion(attendee) {
+      attendee.markedForDeletion = false;
+      firebaseService.postAttendees([attendee]);
+    },
+    onDelete(attendee) {
+      if (
+        confirm(
+          `Are you sure you want to delete ${attendee.firstName} ${attendee.lastName}`
+        )
+      ) {
+        firebaseService.deleteAttendees([attendee]);
+      }
     },
   },
 };

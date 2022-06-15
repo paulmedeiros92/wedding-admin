@@ -13,4 +13,7 @@ export default {
   postAttendees(attendees) {
     return axios.post(`${baseURL}/app/api/attendees`, attendees);
   },
+  deleteAttendees(attendees) {
+    return axios.delete(`${baseURL}/app/api/attendees`, attendees);
+  },
 };

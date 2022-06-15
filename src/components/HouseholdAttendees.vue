@@ -75,6 +75,13 @@
           >
             <md-icon>arrow_right</md-icon>
           </md-button>
+          <md-button
+            @click="onDelete(item)"
+            class="md-icon-button md-raised md-accent"
+            title="Delete attendee."
+          >
+            <md-icon>delete</md-icon>
+          </md-button>
         </md-table-cell>
       </md-table-row>
     </md-table>
@@ -143,13 +150,14 @@ export default {
       attendee.markedForDeletion = false;
       firebaseService.postAttendees([attendee]);
     },
-    onDelete(attendee) {
+    async onDelete(attendee) {
       if (
         confirm(
           `Are you sure you want to delete ${attendee.firstName} ${attendee.lastName}`
         )
       ) {
-        firebaseService.deleteAttendees([attendee]);
+        await firebaseService.deleteAttendees([attendee]);
+        this.$store.dispatch("getAttendees");
       }
     },
   },

@@ -14,6 +14,6 @@ export default {
     return axios.post(`${baseURL}/app/api/attendees`, attendees);
   },
   deleteAttendees(attendees) {
-    return axios.delete(`${baseURL}/app/api/attendees`, attendees);
+    return axios.delete(`${baseURL}/app/api/attendees`, { data: attendees });
   },
 };

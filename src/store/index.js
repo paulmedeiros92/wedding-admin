@@ -1,15 +1,14 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
-import firebaseService from '@/services/firebase-service';
+import Vue from "vue";
+import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
+import firebaseService from "@/services/firebase-service";
 
 Vue.use(Vuex);
 
 /* eslint-disable no-new */
 const store = new Vuex.Store({
   plugins: [createPersistedState()],
-  modules: {
-  },
+  modules: {},
   strict: true, // turn off in Production
   state: {
     isLoading: false,
@@ -25,15 +24,19 @@ const store = new Vuex.Store({
     },
     setAttendees(state, attendees) {
       state.attendees = attendees;
-    }
+    },
   },
   actions: {
-    getAttendees({ commit }) {
-      commit('setLoading', true);
-      firebaseService.getAttendees()
-        .then((result) => commit('setAttendees', result.data.data))
-        .catch((error) => commit('setError', error))
-        .finally(() => commit('setLoading', false));
+    async getAttendees({ commit }) {
+      commit("setLoading", true);
+      try {
+        const result = await firebaseService.getAttendees();
+        commit("setAttendees", result.data.data);
+      } catch (error) {
+        commit("setError", error);
+      } finally {
+        commit("setLoading", false);
+      }
     },
   },
   getters: {
@@ -46,7 +49,7 @@ const store = new Vuex.Store({
     attendeesViewed: (state) => {
       return state.attendees.filter((attendee) => attendee.hasViewed);
     },
-  }
+  },
 });
 
 export default store;

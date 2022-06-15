@@ -146,9 +146,10 @@ export default {
     onSelect(item) {
       this.$router.push({ path: `/tools/${item.hashWord}` });
     },
-    demarkForDeletion(attendee) {
+    async demarkForDeletion(attendee) {
       attendee.markedForDeletion = false;
-      firebaseService.postAttendees([attendee]);
+      await firebaseService.postAttendees([attendee]);
+      this.$store.dispatch("getAttendees");
     },
     async onDelete(attendee) {
       if (

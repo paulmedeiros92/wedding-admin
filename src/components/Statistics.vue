@@ -3,24 +3,30 @@
     <Stat title="Attending" :value="attendeesAttending.length" />
     <Stat title="Children" :value="attendeesChildren.length" />
     <Stat title="Viewed" :value="attendeesViewed.length" />
+    <Stat title="Total" :value="attendees.length" />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Stat from './Stat.vue';
+import { mapGetters, mapState } from "vuex";
+import Stat from "./Stat.vue";
 
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   props: {
-    msg: String
+    msg: String,
   },
   components: {
-    Stat
+    Stat,
   },
   computed: {
-    ...mapGetters(['attendeesAttending', 'attendeesChildren', 'attendeesViewed'])
-  }
+    ...mapGetters([
+      "attendeesAttending",
+      "attendeesChildren",
+      "attendeesViewed",
+    ]),
+    ...mapState(["attendees"]),
+  },
 };
 </script>
 

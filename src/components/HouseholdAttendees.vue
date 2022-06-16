@@ -52,7 +52,7 @@
         <md-table-cell md-label="Food Selection" md-sort-by="food">{{
           item.food
         }}</md-table-cell>
-        <md-table-cell md-label="Child?">
+        <md-table-cell md-label="Child?" md-sort-by="isChild">
           <md-icon v-if="item.isChild" style="color: green">check</md-icon>
           <md-icon v-else style="color: red">close</md-icon>
         </md-table-cell>
@@ -141,6 +141,8 @@ export default {
             .toLowerCase()
             .includes(this.search.toLowerCase())
         );
+      } else {
+        this.items = this.attendees;
       }
     },
     onSelect(item) {

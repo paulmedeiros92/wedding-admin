@@ -1,9 +1,9 @@
 <template>
   <div class="statistics">
     <Stat title="Attending" :value="attendeesAttending.length" />
-    <Stat title="Children" :value="attendeesChildren.length" />
     <Stat title="Viewed" :value="attendeesViewed.length" />
     <Stat title="Total" :value="attendees.length" />
+    <Stat title="Children" :value="attendeesChildren.length" />
   </div>
 </template>
 
